@@ -1,0 +1,33 @@
+body,
+html,
+#root,
+canvas,
+.scenery,
+.game,
+.ui {
+  margin: 0;
+  padding:0;
+  height: 100%;
+  width: 100%;
+}
+
+.scenery {
+  position: absolute;
+  z-index: -10;
+  top: 0;
+  left: 0;
+}
+
+.game {
+  position: absolute;
+  z-index: -6;
+  top: 0;
+  left: 0;
+}
+
+.ui {
+  position: absolute;
+  z-index: -2;
+  top: 0;
+  left: 0;
+}
