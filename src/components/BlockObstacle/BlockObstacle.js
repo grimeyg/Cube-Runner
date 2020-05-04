@@ -2,7 +2,7 @@ import React from 'react'
 
 const BlockObstacle = (props) => {
   return (
-    <mesh>
+    <mesh position={[0, 0, -10]}>
       <boxBufferGeometry attach="geometry" args={[1, 1, 1]}/>
       <meshBasicMaterial attach="material" color="red"/>
     </mesh>
