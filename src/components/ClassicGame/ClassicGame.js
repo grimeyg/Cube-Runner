@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import './ClassicGame.css'
 import * as THREE from 'three'
-import { Canvas } from 'react-three-fiber'
+import { Canvas, extend, useFrame, useThree } from 'react-three-fiber'
 import BlockObstacle from '../BlockObstacle/BlockObstacle.js'
 import ShipUno from '../ShipUno/ShipUno.js'
 import Ground from '../Ground/Ground.js'
@@ -9,18 +9,24 @@ import Lighting from '../Lighting/Lighting.js'
 
 
 const ClassicGame = () => {
-  const handleKeydown = (e) => {
-    console.log(e.key)
-  }
 
-  window.addEventListener("keydown", handleKeydown)
+  let camPosition = [0, 0.7, 3.5]
+
+  // useEffect(() => {
+  //   window.addEventListener("keydown", handleKeyDown)
+  //   window.addEventListener("keyup", handleKeyUp)
+  // }, [])
 
     return (
-        <Canvas className="game" camera={{position:[0, 0.7, 3.5]}}>
+        <Canvas className="game" camera={{position: camPosition}} onCreated={({ gl }) => {
+          gl.shadowMap.enabled = true
+          gl.shadowMap.type = THREE.PCFSoftShadowMap
+          }}
+        >
           <Lighting />
           <Ground />
-          <BlockObstacle/>
-          <ShipUno/>
+          <BlockObstacle />
+          <ShipUno />
         </Canvas>
     )
 }
