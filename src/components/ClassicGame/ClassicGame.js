@@ -1,7 +1,8 @@
-import React, { useRef } from 'react'
+import React, { useState, useEffect } from 'react'
 import './ClassicGame.css'
 import * as THREE from 'three'
-import { Canvas, extend, useFrame, useThree } from 'react-three-fiber'
+import { Canvas } from 'react-three-fiber'
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import BlockObstacle from '../BlockObstacle/BlockObstacle.js'
 import ShipUno from '../ShipUno/ShipUno.js'
 import Ground from '../Ground/Ground.js'
@@ -9,16 +10,22 @@ import Lighting from '../Lighting/Lighting.js'
 
 
 const ClassicGame = () => {
+  //ship model
+  const [model, setModel] = useState(false)
 
-  let camPosition = [0, 0.7, 3.5]
-
-  // useEffect(() => {
-  //   window.addEventListener("keydown", handleKeyDown)
-  //   window.addEventListener("keyup", handleKeyUp)
-  // }, [])
+  useEffect(() => {
+    new GLTFLoader().load('ship.gltf', ( gltf ) => {
+      gltf.scene.traverse(( node ) => {
+        if ( node.isMesh ) {
+          node.castShadow = true
+        }
+      })
+      setModel(gltf)
+    })
+  })
 
     return (
-        <Canvas className="game" camera={{position: camPosition}} onCreated={({ gl }) => {
+        <Canvas className="game" camera={{position: [0, 0.656, 3.6]}} onCreated={({ gl }) => {
           gl.shadowMap.enabled = true
           gl.shadowMap.type = THREE.PCFSoftShadowMap
           }}
@@ -26,7 +33,7 @@ const ClassicGame = () => {
           <Lighting />
           <Ground />
           <BlockObstacle />
-          <ShipUno />
+          <ShipUno model={model}/>
         </Canvas>
     )
 }
